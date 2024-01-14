@@ -1,5 +1,3 @@
-package com.timiles.tesaxholdem;
-
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;

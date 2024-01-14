@@ -1,6 +1,3 @@
-package com.timiles.tesaxholdem;
-
-
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;

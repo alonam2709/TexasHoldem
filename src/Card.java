@@ -1,5 +1,3 @@
-package com.timiles.tesaxholdem;
-
 class Card {
 
 	// relies on consecutive values in this order

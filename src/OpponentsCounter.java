@@ -1,5 +1,4 @@
-package com.timiles.tesaxholdem;
-
+/*
 
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -13,7 +12,7 @@ import javax.swing.border.TitledBorder;
 /**
  * @author default
  *
- */
+
 abstract class OpponentsCounter extends JPanel
         implements ActionListener, ItemListener {
 
@@ -93,3 +92,5 @@ abstract class OpponentsCounter extends JPanel
     }
 
 }
+
+ */

@@ -1,5 +1,3 @@
-package com.timiles.tesaxholdem;
-
 import java.util.Vector;
 
 

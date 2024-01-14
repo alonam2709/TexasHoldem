@@ -1,5 +1,3 @@
-package com.timiles.tesaxholdem;
-
 public class Probability {
 
 	public int hand;

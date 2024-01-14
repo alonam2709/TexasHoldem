@@ -1,8 +1,3 @@
-
-
-package com.timiles.tesaxholdem.myUtils;
-
-
 public class MyMath {
 
 	public static int nCr(int n, int r) {

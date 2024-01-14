@@ -1,7 +1,4 @@
-
-
-package com.timiles.tesaxholdem.myUtils;
-import javax.swing.*; 
+import javax.swing.*;
 import javax.swing.event.*; 
 import javax.swing.text.html.*; 
 import java.awt.*; 
