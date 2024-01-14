@@ -65,7 +65,7 @@ public class ProbabilityDisplay extends JPanel {
 	public void updateProbabilityDisplay() {
 		String s = format(prob);
 		if (s.equals(GUARANTEED)) {
-			//this.probability.setEnabled(false);
+			this.probability.setEnabled(false);
 //			this.setBorder( new TitledBorder(
 //					BorderFactory.createLoweredBevelBorder(),
 //					name ) );

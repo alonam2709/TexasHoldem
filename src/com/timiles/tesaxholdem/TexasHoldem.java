@@ -32,7 +32,7 @@ public class TexasHoldem extends Applet
 	private CardsDisplay cardsDisplay;
 	private Display display;
 	private JButton resetButton;
-	private OpponentsCounter opponentsCounter;
+	// private OpponentsCounter opponentsCounter;
 
 	private Hand hand;
 	
@@ -95,14 +95,14 @@ public class TexasHoldem extends Applet
 		cardsDisplay = new CardsDisplay();
 
 		display = new Display();
-
+/*
 		opponentsCounter = new OpponentsCounter() {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource().equals(fold)) {
 					fold();
 				}
 			}
-			
+
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange()==ItemEvent.SELECTED &&
 						e.getSource().equals(counter)) {
@@ -111,10 +111,14 @@ public class TexasHoldem extends Applet
 				}		
 			}
 		};
+
+ */
 		resetButton = new JButton("Reset");
+
 		
 		JPanel buttonsPanel = new JPanel( new BorderLayout() );
-		buttonsPanel.add(opponentsCounter, BorderLayout.CENTER);
+		// buttonsPanel.add(opponentsCounter, BorderLayout.CENTER);
+
 		buttonsPanel.add(resetButton, BorderLayout.SOUTH);
 		
 		this.setLayout( new BorderLayout() );
@@ -136,7 +140,7 @@ public class TexasHoldem extends Applet
 		cardsButtons.reset();
 		cardsDisplay.reset();
 		display.reset();
-		opponentsCounter.reset();
+		// opponentsCounter.reset();
 		
 		hand = new Hand(); // is this the best way to reset hand??
 	}
