@@ -66,34 +66,4 @@ class Card {
 		return suit;
 	}
 
-	public boolean isAce() {
-		return (number==ACE);
-	}
-
-	public boolean isPicture() {
-		return (number>TEN);
-	}
-
-	public static boolean isValidSuit(int i) {
-		return (i==Card.DIAMONDS ||
-				i==Card.CLUBS ||
-				i==Card.HEARTS ||
-				i==Card.SPADES );
-	}
-	public static boolean isValidNumber(int i) {
-		return (i==Card.TWO ||
-				i==Card.THREE ||
-				i==Card.FOUR ||
-				i==Card.FIVE ||
-				i==Card.SIX ||
-				i==Card.SEVEN ||
-				i==Card.EIGHT ||
-				i==Card.NINE ||
-				i==Card.TEN ||
-				i==Card.JACK ||
-				i==Card.QUEEN ||
-				i==Card.KING ||
-				i==Card.ACE	);
-	}
-
 }
