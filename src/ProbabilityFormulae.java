@@ -7,14 +7,9 @@ public abstract class ProbabilityFormulae {
 	protected static final int ANY_SUIT = 401;
 	
 	protected Vector cards;
-	protected static int opponentsCount;
-	
+
 	public ProbabilityFormulae( Vector cards ) {
 		this.cards = cards;
-	}
-
-	public static void setOpponentsCount(int opponentsCount) {
-		ProbabilityFormulae.opponentsCount = opponentsCount;
 	}
 
 	protected int count(int number, int suit, Vector cards) {

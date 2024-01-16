@@ -94,8 +94,8 @@ class Hand {
 			int bestHand = this.getBestHand();
 			calculateTop_ = Hand.STRAIGHT_FLUSH - bestHand;
 
-			probabilityFormulae =
-				new TheirProbabilityFormulae(cards);
+			//probabilityFormulae =
+				//new TheirProbabilityFormulae(cards);
 			probs[calculateTop_] =
 				calculate( bestHand,
 						new HigherHandProbabilityFormulae(cards) );

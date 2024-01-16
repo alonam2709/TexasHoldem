@@ -17,8 +17,6 @@ class Display extends JPanel {
 		"Probabilities of you achieving:";
 	private static final String YOU_HAVE =
 		"Your Hand:";
-	private static final String THEIR_PROBS =
-		"Probabilities of being beaten by:";
 
 	public Display() {
 
@@ -76,9 +74,10 @@ class Display extends JPanel {
 	}
 	
 	public void setProbabilities( Probability[] probs ) {
-		for (int i=0; i<probs.length; i++)
-		probDisplays[getDisplay(probs[i].hand)]
-					 .setProbability(probs[i].probability);
+		for(int i=0; i<probs.length; i++) {
+			probDisplays[getDisplay(probs[i].hand)]
+					.setProbability(probs[i].probability);
+		}
 	}
 	
 	private void updateAllDisplays() {
@@ -127,7 +126,7 @@ class Display extends JPanel {
 	
 	public void setComplete(String yourHand) {
 		probs.setBorder( new TitledBorder(
-				YOU_HAVE+" "+yourHand+". "+THEIR_PROBS) );
+				YOU_HAVE+" "+yourHand+". ") );
 		for (int j=0; j<DISPLAY_TOP_; j++) {
 			probDisplays[j].reset();
 		}

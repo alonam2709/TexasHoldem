@@ -146,6 +146,7 @@ public class TexasHoldem extends Applet
 		
 		if ( e.getSource().equals(resetButton) )
 			reset();
+
 	}
 	
 	private void updateDisplay() {
