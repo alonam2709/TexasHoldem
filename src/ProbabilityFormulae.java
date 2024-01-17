@@ -1,11 +1,15 @@
 import java.util.Vector;
 
-
+/*
+ * Abstract class providing a template for calculating probabilities of different poker hands.
+ * This class includes methods for counting specific cards and checking for certain conditions
+ * within a set of cards.
+ */
 public abstract class ProbabilityFormulae {
-	
+	// Constants to represent any number or any suit in a card deck
 	protected static final int ANY_NUMBER = 400;
 	protected static final int ANY_SUIT = 401;
-	
+	// Vector to store the cards for probability calculations
 	protected Vector cards;
 
 	public ProbabilityFormulae( Vector cards ) {
@@ -13,33 +17,37 @@ public abstract class ProbabilityFormulae {
 	}
 
 	protected int count(int number, int suit, Vector cards) {
-		int count=0;
+		int count = 0;
 
+		// If we are counting any card of a specific suit
 		if (number == ANY_NUMBER) {
-			for (int i=0; i<cards.size(); i++) {
+			for (int i = 0; i < cards.size(); i++) {
+				// Check if the current card's suit matches the specified suit
 				if (((Card) cards.elementAt(i)).getSuit() == suit)
-					count++;
+					count++; // Increment count if suit matches
 			}
-			return count;
+			return count; // Return the total count of cards with the specified suit
 		}
-		
+
+		// If we are counting any card of a specific number
 		if (suit == ANY_SUIT) {
-			for (int i=0; i<cards.size(); i++) {
+			for (int i = 0; i < cards.size(); i++) {
+				// Check if the current card's number matches the specified number
 				if (((Card) cards.elementAt(i)).getNumber() == number)
-					count++;
+					count++; // Increment count if number matches
 			}
-			return count;
+			return count; // Return the total count of cards with the specified number
 		}
 
-		
-		for (int i=0; i<cards.size(); i++) {
+		// If we are counting cards of a specific number and suit
+		for (int i = 0; i < cards.size(); i++) {
 			Card c = (Card) cards.elementAt(i);
-			if (c.getNumber() == number &&
-					c.getSuit() == suit)
-				count++;
+			// Check if both the number and suit of the current card match
+			if (c.getNumber() == number && c.getSuit() == suit)
+				count++; // Increment count if both number and suit match
 		}
 
-		return count;
+		return count; // Return the total count of cards matching both number and suit
 	}
 	
 	protected int countXofaKind(int x, Vector cards) {

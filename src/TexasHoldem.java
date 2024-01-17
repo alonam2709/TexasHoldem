@@ -13,8 +13,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-/**
- * @author default
+/*
+ * Main class for a Texas Hold'em poker game application.
+ * This class sets up the game's user interface and handles the game's logic.
  */
 public class TexasHoldem extends Applet
   implements ActionListener {
@@ -25,17 +26,21 @@ public class TexasHoldem extends Applet
 	private static final String ICON_FILENAME =
 		"images/icons/small_icon.gif";
 
-	private CardsButtons cardsButtons;
-	private CardsDisplay cardsDisplay;
-	private Display display;
-	private JButton resetButton;
-	// private OpponentsCounter opponentsCounter;
+	private CardsButtons cardsButtons; // Panel for card buttons
+	private CardsDisplay cardsDisplay; // Panel for displaying cards
+	private Display display; // Display for showing game information
+	private JButton resetButton; // Button to reset the game
+	// private OpponentsCounter opponentsCounter; // Counter for opponents (commented out)
 
-	private Hand hand;
+
+	private Hand hand; // Represents the player's hand
 	
-	private static boolean isRunningAsApplet = true;
-	
-	
+	private static boolean isRunningAsApplet = true;  // Flag to check if running as an applet
+
+	/*
+	 * Main method to run the application as a standalone program.
+	 */
+
 	public static void main(String[] args) {
 		
 		isRunningAsApplet = false;
@@ -53,7 +58,7 @@ public class TexasHoldem extends Applet
 					System.exit(0);
 				}
             });
-		
+
 	    ImageIcon icon = new ImageIcon(ICON_FILENAME);
 		jf.setIconImage(icon.getImage());
 		jf.setResizable(false);
@@ -69,13 +74,16 @@ public class TexasHoldem extends Applet
 				(int) (screenSize.getHeight() - frameSize.getHeight())/2);
 
 		jf.show();
+		//Initializes the applet or application.
+		// Sets up the UI components and initializes the game state.
 		
 	}
 	
 	public void init() {
 
 		hand = new Hand();
-
+		// Setup for cardsButtons, cardsDisplay, display, etc.
+		// Implementation of init method.
 		cardsButtons = new CardsButtons() {
 			public void actionPerformed(ActionEvent e) {
 				if (hand.isComplete()) return;
@@ -128,18 +136,12 @@ public class TexasHoldem extends Applet
 		
 		
 	}
-	
-	public void start() {
 
-	}
-	
 	private void reset() {
 		cardsButtons.reset();
 		cardsDisplay.reset();
 		display.reset();
-		// opponentsCounter.reset();
-		
-		hand = new Hand(); // is this the best way to reset hand??
+		hand = new Hand();
 	}
 
 	public void actionPerformed(ActionEvent e) {
