@@ -1,11 +1,13 @@
 import java.util.Vector;
 
-
+/*
+Class representing a poker hand and its probability calculations.
+It supports the addition of cards, calculation of the best hand, and
+ determination of probabilities for various poker hand types.
+ */
 class Hand {
 
-	/**
-	 * must be consecutive ints in lower to higher order.
-	 */
+	// Constants representing different types of poker hands.
 	public static final int HIGH_CARD = 300;
 	public static final int ONE_PAIR = 301;
 	public static final int TWO_PAIR = 302;
@@ -15,10 +17,11 @@ class Hand {
 	public static final int FULL_HOUSE = 306;
 	public static final int FOUR_OF_A_KIND = 307;
 	public static final int STRAIGHT_FLUSH = 308;
-	
+	// Vector to store cards in the hand.
 	private Vector cards;
+	// Probability calculation strategy used for this hand.
 	private ProbabilityFormulae probabilityFormulae;
-	
+	//Converts a hand type to its string representation.
 	public static String toString(int hand) {
 		switch(hand) {
 		case HIGH_CARD : return "High Card";
@@ -33,7 +36,7 @@ class Hand {
 		default : return "ERROR: Hand.toString()";
 		}
 	}
-	
+	//  Checks if a given hand type is valid.
 	public static boolean isValid(int hand) {
 		switch(hand) {
 		case HIGH_CARD : // fall through
@@ -50,28 +53,28 @@ class Hand {
 		
 	}
 	
-
+// Initializes card vector and probability calculation formula.
 	public Hand() {
 		cards = new Vector(7,0);
 		probabilityFormulae = new YourProbabilityFormulae(cards);
 	}
-	
+	// Implementation for adding a card to the hand
 	public void addCard(Card c) {
 		if (cards.size() < 7) {
 			cards.addElement(c);
 		}
 	}
-	
+	//Checks if the hand requires an update based on the number of cards.
 	public boolean requiresUpdate() {
 		return (cards.size()==2 || cards.size()>=5 );
 	}
-	
+	// Implementation for checking if the hand is complete
 	public boolean isComplete() {
 		return (cards.size()==7);
 	}
 	
 	public int getBestHand() {
-		
+		// Implementation for determining the best hand
 		ProbabilityFormulae probs = new YourProbabilityFormulae(cards);
 		Probability p;
 
@@ -86,7 +89,7 @@ class Hand {
 
 	
 	public Probability[] getProbabilities() {
-		
+		//Calculates the probabilities for various poker hands.
 		Probability[] probs = new Probability[8];
 		int calculateTop_ = probs.length;
 
@@ -113,7 +116,7 @@ class Hand {
 	}
 	
 	private Probability calculate(int hand, ProbabilityFormulae probs) {
-		
+		// Implementation for calculating the probability of a specific hand
 		switch(hand) {
 		case Hand.STRAIGHT_FLUSH :
 			return new Probability( Hand.STRAIGHT_FLUSH,

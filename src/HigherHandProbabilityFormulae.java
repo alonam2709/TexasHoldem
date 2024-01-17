@@ -1,12 +1,6 @@
 import java.util.Vector;
 
-/**
- * @author default
- * 
- * This class is for calculating the probability that you will be beaten
- * by a hand of equal status but higher rank, e.g. a higher pair.
- *
- */
+//Class for calculating probabilities of achieving higher poker hands.
 class HigherHandProbabilityFormulae extends ProbabilityFormulae {
 
 	private Vector yourCards;
@@ -14,24 +8,24 @@ class HigherHandProbabilityFormulae extends ProbabilityFormulae {
 
 	public HigherHandProbabilityFormulae(Vector cards) {
 		super(cards);
-
-		yourCards = new Vector(2);
-		communityCards = new Vector(5);
-		
+		// Constructor that separates the given cards into 'your' cards and community cards.
+		yourCards = new Vector(2); // Vector storing your cards
+		communityCards = new Vector(5); // Vector storing community cards
+		// Separating the first two cards as 'your' cards
 		for (int i=0; i<2; i++)
 			yourCards.add(cards.elementAt(i));
+		// The remaining cards are treated as community cards
 		for (int i=2; i<7; i++)
 			communityCards.add(cards.elementAt(i));
 	}
 
+	// All these methods are PlaceHolder Values and will be replaced with actual calculations from the probability class
 	public double calcStraightFlush() {
 		
 		return 1;
 	}
 
 	public double calcFlush() {
-		
-		// compare each card until differs
 		return 1;
 	}
 
@@ -52,3 +46,4 @@ class HigherHandProbabilityFormulae extends ProbabilityFormulae {
 	}
 
 }
+
