@@ -18,7 +18,7 @@ class Hand {
 	public static final int FOUR_OF_A_KIND = 307;
 	public static final int STRAIGHT_FLUSH = 308;
 	// Vector to store cards in the hand.
-	private Vector cards;
+	public Vector cards;
 	// Probability calculation strategy used for this hand.
 	private ProbabilityFormulae probabilityFormulae;
 	//Converts a hand type to its string representation.
@@ -149,6 +149,60 @@ class Hand {
 			return null;
 		}
 		
+	}
+	//Calculating Pre-Flop Strength based on of [
+	public double calculatePreFlopHandStrength() {
+		if (cards.size() < 2) {
+			return 0; // Ensure there are at least two cards for pre-flop strength calculation
+		}
+
+		Card card1 = (Card) cards.elementAt(0);
+		Card card2 = (Card) cards.elementAt(1);
+
+		// Convert the card numbers to their poker values
+		int card1Value = convertCardValueToPokerValue(card1.getNumber());
+		int card2Value = convertCardValueToPokerValue(card2.getNumber());
+
+		// Calculate the total points based on card values
+		int cardValuePoints = card1Value + card2Value;
+
+		// Add points for a pair
+		int pairPoints = 0;
+		if (card1.getNumber() == card2.getNumber()) {
+			pairPoints = 10; // Add points if cards form a pair
+		}
+
+		// Add points if the cards are suited
+		int suitedPoints = 0;
+		if (card1.getSuit() == card2.getSuit()) {
+			suitedPoints = 5; // Add points for suited cards
+		}
+
+		// Calculate total points
+		int totalPoints = cardValuePoints + pairPoints + suitedPoints;
+
+		// Normalize to a percentage; the maximum points would be for a pair of Aces
+		return (double) totalPoints / (38) * 100;
+	}
+
+	private int convertCardValueToPokerValue(int cardNumber) {
+		// Method to convert card constants to poker values
+		switch (cardNumber) {
+			case Card.TWO: return 2;
+			case Card.THREE: return 3;
+			case Card.FOUR: return 4;
+			case Card.FIVE: return 5;
+			case Card.SIX: return 6;
+			case Card.SEVEN: return 7;
+			case Card.EIGHT: return 8;
+			case Card.NINE: return 9;
+			case Card.TEN: return 10;
+			case Card.JACK: return 11;
+			case Card.QUEEN: return 12;
+			case Card.KING: return 13;
+			case Card.ACE: return 14;
+			default: return 0; // Default value for invalid card numbers
+		}
 	}
 
 }

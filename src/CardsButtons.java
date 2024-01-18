@@ -20,7 +20,6 @@ abstract class CardsButtons extends JPanel
 		"images/suits/";
 
 
-
 	 // Constructor for CardsButtons. Sets up the layout and initializes buttons for cards.
 
 	public CardsButtons() {
@@ -96,6 +95,7 @@ abstract class CardsButtons extends JPanel
 		cardButton[number][suit].setEnabled(false);
 		return new Card( getNumber(number), getSuit(suit) );
 	}
+
 	// Method to get the suit based on an integer value
 	private int getSuit( int i ) {
 		switch(i) {

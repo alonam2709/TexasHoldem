@@ -1,10 +1,6 @@
 import java.applet.Applet;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
+import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -30,7 +26,8 @@ public class TexasHoldem extends Applet
 	private CardsDisplay cardsDisplay; // Panel for displaying cards
 	private Display display; // Display for showing game information
 	private JButton resetButton; // Button to reset the game
-	// private OpponentsCounter opponentsCounter; // Counter for opponents (commented out)
+	private JLabel handStrengthLabel; // Label to display hand strength
+
 
 
 	private Hand hand; // Represents the player's hand
@@ -82,6 +79,8 @@ public class TexasHoldem extends Applet
 	public void init() {
 
 		hand = new Hand();
+		// Initialize the hand strength label and add it to the GUI
+		handStrengthLabel = new JLabel("           0%");
 		// Setup for cardsButtons, cardsDisplay, display, etc.
 		// Implementation of init method.
 		cardsButtons = new CardsButtons() {
@@ -100,31 +99,19 @@ public class TexasHoldem extends Applet
 		cardsDisplay = new CardsDisplay();
 
 		display = new Display();
-/*
-		opponentsCounter = new OpponentsCounter() {
-			public void actionPerformed(ActionEvent e) {
-				if (e.getSource().equals(fold)) {
-					fold();
-				}
-			}
 
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange()==ItemEvent.SELECTED &&
-						e.getSource().equals(counter)) {
-					comboChange();
-					if (hand.isComplete()) updateDisplay();
-				}		
-			}
-		};
-
- */
 		resetButton = new JButton("Reset");
 
 		
-		JPanel buttonsPanel = new JPanel( new BorderLayout() );
-		// buttonsPanel.add(opponentsCounter, BorderLayout.CENTER);
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
+		buttonsPanel.add(new JLabel("Hand Strength:"));
+		buttonsPanel.add(handStrengthLabel);
+		buttonsPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
+		// Last 10 hands button
 		buttonsPanel.add(resetButton, BorderLayout.SOUTH);
+		buttonsPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
 		
 		this.setLayout( new BorderLayout() );
 		this.add(cardsButtons, BorderLayout.NORTH);
@@ -152,6 +139,13 @@ public class TexasHoldem extends Applet
 	}
 	
 	private void updateDisplay() {
+		// Update the hand strength display if there are exactly two cards
+		if (hand.cards.size() >= 2) {
+			double strength = hand.calculatePreFlopHandStrength();
+			handStrengthLabel.setText(String.format("%.2f%%", strength));
+		} else {
+			handStrengthLabel.setText("N/A");
+		}
 		if ( hand.isComplete() ) {
 			display.setComplete(Hand.toString(hand.getBestHand()));
 		}
@@ -162,6 +156,7 @@ public class TexasHoldem extends Applet
 		else {
 			display.setAllDisplaysEnabled(false);
 		}
+
 	}
 	
 }
