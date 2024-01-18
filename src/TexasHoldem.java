@@ -27,8 +27,9 @@ public class TexasHoldem extends Applet
 	private Display display; // Display for showing game information
 	private JButton resetButton; // Button to reset the game
 	private JLabel handStrengthLabel; // Label to display hand strength
-
-
+	private JButton showLogsButton; // Button to show the last 10 hands
+	private HandLogQueue handLogQueue; // Queue in order to store the last 10 hands
+	private static final String LOG_FILE_NAME = "hand_logs.dat";
 
 	private Hand hand; // Represents the player's hand
 	
@@ -102,14 +103,20 @@ public class TexasHoldem extends Applet
 
 		resetButton = new JButton("Reset");
 
-		
+		handLogQueue = new HandLogQueue();
+		showLogsButton = new JButton("Show Last 10 Hands");
+		showLogsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				displayHandLogs();
+			}
+		});
+
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
 		buttonsPanel.add(new JLabel("Hand Strength:"));
 		buttonsPanel.add(handStrengthLabel);
 		buttonsPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-
-		// Last 10 hands button
+		buttonsPanel.add(showLogsButton);
 		buttonsPanel.add(resetButton, BorderLayout.SOUTH);
 		buttonsPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
 		
@@ -158,5 +165,29 @@ public class TexasHoldem extends Applet
 		}
 
 	}
-	
+
+	private void displayHandLogs() {
+		System.out.println("Displaying Hand Logs...");
+
+		// Load the hand logs from the file
+		HandLogQueue loadedQueue = HandLogQueue.loadFromFile(LOG_FILE_NAME);
+
+		if (loadedQueue != null) {
+			JFrame logFrame = new JFrame("Hand Logs");
+			JTextArea logArea = new JTextArea();
+			logArea.setEditable(false);
+
+			// Iterate over the loaded logs
+			for (HandLogEntry entry : loadedQueue) {
+				logArea.append(entry.toString() + "\n\n");
+			}
+
+			logFrame.add(new JScrollPane(logArea));
+			logFrame.setSize(400, 600); // Set preferred size
+			logFrame.setVisible(true);
+		} else {
+			System.out.println("No hand logs loaded.");
+		}
+	}
+
 }
