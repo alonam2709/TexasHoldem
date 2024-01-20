@@ -2,6 +2,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import java.awt.Color;
 /*
  * Class for displaying the probability of a specific poker hand.
  * It supports various formats for displaying probabilities, including decimal, fraction, and percent.
@@ -31,7 +32,8 @@ public class ProbabilityDisplay extends JPanel {
 		setProbabilityEnabled(false);
 		ProbabilityDisplay.format = DECIMAL;
 		ProbabilityDisplay.decimalPlaces = 2;
-		
+		this.probability.setForeground(Color.BLACK);
+
 		this.add(probability, SwingConstants.CENTER);
 	}
 
@@ -64,6 +66,7 @@ public class ProbabilityDisplay extends JPanel {
 	}
 
 	// Implementation of updating the probability display
+	/*
 	public void updateProbabilityDisplay() {
 		String s = format(prob);
 		if (s.equals(GUARANTEED)) {
@@ -71,6 +74,21 @@ public class ProbabilityDisplay extends JPanel {
 		}
 		if (s.equals(IMPOSSIBLE)) {
 			setProbabilityEnabled(false);
+		}
+		this.probability.setText(s);
+	}
+
+	 */
+	public void updateProbabilityDisplay() {
+		String s = format(prob);
+		if (s.equals(GUARANTEED)) {
+			//this.probability.setEnabled(false);
+			this.probability.setForeground(Color.GREEN); // Set text color to green
+		} else if (s.equals(IMPOSSIBLE)) {
+			//setProbabilityEnabled(false);
+			this.probability.setForeground(Color.RED); // Set text color to red
+		} else {
+			this.probability.setForeground(Color.BLACK); // Set text color to black for other cases
 		}
 		this.probability.setText(s);
 	}
