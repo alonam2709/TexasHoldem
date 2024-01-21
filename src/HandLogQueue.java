@@ -1,3 +1,4 @@
+/*
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -86,4 +87,50 @@ class HandLogQueue implements Iterable<HandLogEntry>, Serializable {
         };
     }
 
+}
+*/
+import java.io.*;
+import java.util.Vector;
+
+public class HandLogQueue {
+    private static final int MAX_SIZE = 10;
+    private Vector<LogEntry> logEntries;
+
+    public HandLogQueue() {
+        logEntries = new Vector<>(MAX_SIZE);
+    }
+
+    public void addLogEntry(LogEntry logEntry) {
+        if (logEntries.size() == MAX_SIZE) {
+            // If the queue is full, remove the oldest entry from the front
+            logEntries.remove(0);
+        }
+
+        logEntries.add(logEntry);
+    }
+
+    public Iterable<LogEntry> getLogEntries() {
+        return logEntries;
+    }
+
+    public void saveToFile(String fileName) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(logEntries);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static HandLogQueue loadFromFile(String fileName) {
+        HandLogQueue loadedQueue = new HandLogQueue();
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            loadedQueue.logEntries = (Vector<LogEntry>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return loadedQueue;
+    }
 }

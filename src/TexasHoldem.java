@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Vector;
 
 /*
  * Main class for a Texas Hold'em poker game application.
@@ -27,9 +30,11 @@ public class TexasHoldem extends Applet
 	private Display display; // Display for showing game information
 	private JButton resetButton; // Button to reset the game
 	private JLabel handStrengthLabel; // Label to display hand strength
-	private JButton showLogsButton; // Button to show the last 10 hands
-	private HandLogQueue handLogQueue; // Queue in order to store the last 10 hands
-	private static final String LOG_FILE_NAME = "hand_logs.dat";
+	//private JButton saveGameButton; // New button to save the game
+	private HandLogQueue handLogQueue;
+	//private JButton showLogsButton; // Button to show the last 10 hands
+	//private HandLogQueue handLogQueue; // Queue in order to store the last 10 hands
+	//private static final String LOG_FILE_NAME = "hand_logs.dat";
 
 	private Hand hand; // Represents the player's hand
 	
@@ -102,21 +107,21 @@ public class TexasHoldem extends Applet
 		display = new Display();
 
 		resetButton = new JButton("Reset");
-
+		//saveGameButton = new JButton("Save Game");
 		handLogQueue = new HandLogQueue();
-		showLogsButton = new JButton("Show Last 10 Hands");
-		showLogsButton.addActionListener(new ActionListener() {
+		JButton outputLogsToTextButton = new JButton("Load Log"); // Renamed button
+		outputLogsToTextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				displayHandLogs();
+				outputHandLogsToTextFile();
 			}
 		});
-
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
 		buttonsPanel.add(new JLabel("Hand Strength:"));
 		buttonsPanel.add(handStrengthLabel);
 		buttonsPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-		buttonsPanel.add(showLogsButton);
+		buttonsPanel.add(outputLogsToTextButton);
+		//buttonsPanel.add(saveGameButton);
 		buttonsPanel.add(resetButton, BorderLayout.SOUTH);
 		buttonsPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
 		
@@ -127,10 +132,64 @@ public class TexasHoldem extends Applet
 		this.add(display, BorderLayout.SOUTH);
 		
 		resetButton.addActionListener(this);
-		
+		//outputLogsToTextButton.addActionListener(this);
 		
 	}
+	/*
+	private void saveGame() {
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("saved_game.dat"))) {
+			oos.writeObject(hand);
+			oos.writeObject(cardsButtons.getButtonStates());
+			oos.writeObject(cardsDisplay.getDisplayedCard());
+			oos.writeObject(display.getProbabilities());
+			System.out.println("Game saved successfully.");
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.err.println("Failed to save the game.");
+		}
+	}
 
+
+	 */
+/*
+	private void outputHandLogsToTextFile() {
+		System.out.println("Outputting Hand Logs to Text...");
+		HandLogQueue loadedQueue = HandLogQueue.loadFromFile(LOG_FILE_NAME);
+
+		if (loadedQueue != null) {
+			try (PrintWriter writer = new PrintWriter(new FileWriter("hand_logs.txt"))) {
+				for (LogEntry entry : loadedQueue.getLogEntries()) {
+					writer.println(entry.toString() + "\n");
+				}
+				System.out.println("Hand logs have been successfully output to 'hand_logs.txt'.");
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.err.println("Failed to output hand logs to the text file.");
+			}
+		} else {
+			System.out.println("No hand logs loaded.");
+		}
+	}
+ */
+	private void outputHandLogsToTextFile() {
+		Iterable<LogEntry> handLogs = handLogQueue.getLogEntries();
+		String fileName = "hand_logs.txt";
+
+		try (FileWriter writer = new FileWriter(fileName)) {
+			// Iterate over the hand logs and write them to the text file
+			for (LogEntry logEntry : handLogs) {
+				writer.write(logEntry.toString());
+				writer.write("\n"); // Add a newline between entries
+			}
+
+			JOptionPane.showMessageDialog(this, "Hand logs saved to " + fileName,
+					"Hand Logs Saved", JOptionPane.INFORMATION_MESSAGE);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Failed to save hand logs to " + fileName,
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 	private void reset() {
 		cardsButtons.reset();
 		cardsDisplay.reset();
@@ -140,11 +199,11 @@ public class TexasHoldem extends Applet
 
 	public void actionPerformed(ActionEvent e) {
 		
-		if ( e.getSource().equals(resetButton) )
+		if ( e.getSource().equals(resetButton) ) {
 			reset();
-
+		}
 	}
-	
+
 	private void updateDisplay() {
 		// Update the hand strength display if there are exactly two cards
 		if (hand.cards.size() >= 2) {
@@ -165,7 +224,7 @@ public class TexasHoldem extends Applet
 		}
 
 	}
-
+/*
 	private void displayHandLogs() {
 		System.out.println("Displaying Hand Logs...");
 
@@ -189,5 +248,7 @@ public class TexasHoldem extends Applet
 			System.out.println("No hand logs loaded.");
 		}
 	}
+
+ */
 
 }
