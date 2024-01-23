@@ -66,19 +66,6 @@ public class ProbabilityDisplay extends JPanel {
 	}
 
 	// Implementation of updating the probability display
-	/*
-	public void updateProbabilityDisplay() {
-		String s = format(prob);
-		if (s.equals(GUARANTEED)) {
-			this.probability.setEnabled(false);
-		}
-		if (s.equals(IMPOSSIBLE)) {
-			setProbabilityEnabled(false);
-		}
-		this.probability.setText(s);
-	}
-
-	 */
 	public void updateProbabilityDisplay() {
 		String s = format(prob);
 		if (s.equals(GUARANTEED)) {

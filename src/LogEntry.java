@@ -1,7 +1,6 @@
-import java.io.Serializable;
 import java.util.Vector;
 
-class LogEntry implements Serializable {
+class LogEntry  {
     private String handDescription;
     private Vector<ProbabilityData> probabilities;
 

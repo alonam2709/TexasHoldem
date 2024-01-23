@@ -97,8 +97,6 @@ class Hand {
 			int bestHand = this.getBestHand();
 			calculateTop_ = Hand.STRAIGHT_FLUSH - bestHand;
 
-			//probabilityFormulae =
-				//new TheirProbabilityFormulae(cards);
 			probs[calculateTop_] =
 				calculate( bestHand,
 						new HigherHandProbabilityFormulae(cards) );
@@ -186,7 +184,7 @@ class Hand {
 	}
 
 	private int convertCardValueToPokerValue(int cardNumber) {
-		// Method to convert card constants to poker values
+		// Method to convert card constants to poker values for the HandStrength Method
 		switch (cardNumber) {
 			case Card.TWO: return 2;
 			case Card.THREE: return 3;

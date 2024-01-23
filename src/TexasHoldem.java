@@ -30,11 +30,7 @@ public class TexasHoldem extends Applet
 	private Display display; // Display for showing game information
 	private JButton resetButton; // Button to reset the game
 	private JLabel handStrengthLabel; // Label to display hand strength
-	//private JButton saveGameButton; // New button to save the game
-	private HandLogQueue handLogQueue;
-	//private JButton showLogsButton; // Button to show the last 10 hands
-	//private HandLogQueue handLogQueue; // Queue in order to store the last 10 hands
-	//private static final String LOG_FILE_NAME = "hand_logs.dat";
+	private HandLogList handLogList;
 
 	private Hand hand; // Represents the player's hand
 	
@@ -107,8 +103,7 @@ public class TexasHoldem extends Applet
 		display = new Display();
 
 		resetButton = new JButton("Reset");
-		//saveGameButton = new JButton("Save Game");
-		handLogQueue = new HandLogQueue();
+		handLogList = new HandLogList();
 		JButton outputLogsToTextButton = new JButton("Load Log"); // Renamed button
 		outputLogsToTextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -132,47 +127,10 @@ public class TexasHoldem extends Applet
 		this.add(display, BorderLayout.SOUTH);
 		
 		resetButton.addActionListener(this);
-		//outputLogsToTextButton.addActionListener(this);
-		
-	}
-	/*
-	private void saveGame() {
-		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("saved_game.dat"))) {
-			oos.writeObject(hand);
-			oos.writeObject(cardsButtons.getButtonStates());
-			oos.writeObject(cardsDisplay.getDisplayedCard());
-			oos.writeObject(display.getProbabilities());
-			System.out.println("Game saved successfully.");
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("Failed to save the game.");
-		}
-	}
 
-
-	 */
-/*
+	}
 	private void outputHandLogsToTextFile() {
-		System.out.println("Outputting Hand Logs to Text...");
-		HandLogQueue loadedQueue = HandLogQueue.loadFromFile(LOG_FILE_NAME);
-
-		if (loadedQueue != null) {
-			try (PrintWriter writer = new PrintWriter(new FileWriter("hand_logs.txt"))) {
-				for (LogEntry entry : loadedQueue.getLogEntries()) {
-					writer.println(entry.toString() + "\n");
-				}
-				System.out.println("Hand logs have been successfully output to 'hand_logs.txt'.");
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.err.println("Failed to output hand logs to the text file.");
-			}
-		} else {
-			System.out.println("No hand logs loaded.");
-		}
-	}
- */
-	private void outputHandLogsToTextFile() {
-		Iterable<LogEntry> handLogs = handLogQueue.getLogEntries();
+		Iterable<LogEntry> handLogs = handLogList.getLogEntries();
 		String fileName = "hand_logs.txt";
 
 		try (FileWriter writer = new FileWriter(fileName)) {
@@ -182,11 +140,14 @@ public class TexasHoldem extends Applet
 				writer.write("\n"); // Add a newline between entries
 			}
 
-			JOptionPane.showMessageDialog(this, "Hand logs saved to " + fileName,
-					"Hand Logs Saved", JOptionPane.INFORMATION_MESSAGE);
+			// Save the game state
+			handLogList.saveToFile(fileName);
+
+			JOptionPane.showMessageDialog(this, "Hand logs and game state saved to " + fileName,
+					"Hand Logs and Game State Saved", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException ex) {
 			ex.printStackTrace();
-			JOptionPane.showMessageDialog(this, "Failed to save hand logs to " + fileName,
+			JOptionPane.showMessageDialog(this, "Failed to save hand logs and game state to " + fileName,
 					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -224,31 +185,4 @@ public class TexasHoldem extends Applet
 		}
 
 	}
-/*
-	private void displayHandLogs() {
-		System.out.println("Displaying Hand Logs...");
-
-		// Load the hand logs from the file
-		HandLogQueue loadedQueue = HandLogQueue.loadFromFile(LOG_FILE_NAME);
-
-		if (loadedQueue != null) {
-			JFrame logFrame = new JFrame("Hand Logs");
-			JTextArea logArea = new JTextArea();
-			logArea.setEditable(false);
-
-			// Iterate over the loaded logs
-			for (HandLogEntry entry : loadedQueue) {
-				logArea.append(entry.toString() + "\n\n");
-			}
-
-			logFrame.add(new JScrollPane(logArea));
-			logFrame.setSize(400, 600); // Set preferred size
-			logFrame.setVisible(true);
-		} else {
-			System.out.println("No hand logs loaded.");
-		}
-	}
-
- */
-
 }
