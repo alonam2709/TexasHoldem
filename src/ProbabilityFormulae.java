@@ -49,45 +49,53 @@ public abstract class ProbabilityFormulae {
 
 		return count; // Return the total count of cards matching both number and suit
 	}
-	
+
+	// Counts the number of X-of-a-Kind in the hand (e.g., pairs, triplets)
 	protected int countXofaKind(int x, Vector cards) {
-		
-		int count = 0;
-		
-		for (int i=0; i<cards.size(); i++) {
-			Card c = (Card) cards.elementAt(i);
-			if (count(c.getNumber(), ANY_SUIT, cards)==x)
-				count++;
-		}
-		
-		return count/x; // because it would have counted each e.g. pair twice
-	}
-	
-	protected boolean contains(int number, int suit, Vector cards) {
-		
-		if (number == ANY_NUMBER) {
-			for (int i=0; i<cards.size(); i++) {
-				if (((Card) cards.elementAt(i)).getSuit() == suit)
-					return true;
-			}
-		}
-		
-		if (suit == ANY_SUIT) {
-			for (int i=0; i<cards.size(); i++) {
-				if (((Card) cards.elementAt(i)).getNumber() == number)
-					return true;
+		int count = 0; // Initialize count
+
+		// Iterate over each card in the hand
+		for (int i = 0; i < cards.size(); i++) {
+			Card c = (Card) cards.elementAt(i); // Get the card at the current index
+
+			// Check if the current card is part of an X-of-a-Kind
+			if (count(c.getNumber(), ANY_SUIT, cards) == x) {
+				count++; // Increment the count if it is part of an X-of-a-Kind
 			}
 		}
 
-		for (int i=0; i<cards.size(); i++) {
-			Card c = (Card) cards.elementAt(i);
-			if (c.getNumber() == number &&
-					c.getSuit() == suit)
-				return true;
+		return count / x; // Adjust count to avoid double counting each set of X-of-a-Kind
+	}
+
+	// Checks if a card with specific number and suit is in the hand
+	protected boolean contains(int number, int suit, Vector cards) {
+		// Check for any card of the specified suit
+		if (number == ANY_NUMBER) {
+			for (int i = 0; i < cards.size(); i++) {
+				if (((Card) cards.elementAt(i)).getSuit() == suit) {
+					return true; // Return true if a card of the suit is found
+				}
+			}
 		}
-		
-		// else
-		return false;
+
+		// Check for any card of the specified number
+		if (suit == ANY_SUIT) {
+			for (int i = 0; i < cards.size(); i++) {
+				if (((Card) cards.elementAt(i)).getNumber() == number) {
+					return true; // Return true if a card of the number is found
+				}
+			}
+		}
+
+		// Check for a specific card with the given number and suit
+		for (int i = 0; i < cards.size(); i++) {
+			Card c = (Card) cards.elementAt(i);
+			if (c.getNumber() == number && c.getSuit() == suit) {
+				return true; // Return true if the specific card is found
+			}
+		}
+
+		return false; // Return false if no matching card is found
 	}
 	
 	public abstract double calcStraightFlush();

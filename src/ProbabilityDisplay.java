@@ -24,19 +24,20 @@ public class ProbabilityDisplay extends JPanel {
 
 	private double prob; // The probability value
 	private String name; // The name of the hand
-	
-	public ProbabilityDisplay( String name ) { //Constructor for the class
+
+	// Constructor for the class
+	public ProbabilityDisplay(String name) {
 		this.name = name;
-		this.setBorder( new TitledBorder(name) );
-		this.probability = new JLabel(DEFAULT);
-		setProbabilityEnabled(false);
-		ProbabilityDisplay.format = DECIMAL;
-		ProbabilityDisplay.decimalPlaces = 2;
-		this.probability.setForeground(Color.BLACK);
+		this.setBorder(new TitledBorder(name)); // Set the border with the hand name
+		this.probability = new JLabel(DEFAULT); // Initialize the probability label
+		setProbabilityEnabled(false); // Initially disable the probability display
+		ProbabilityDisplay.format = DECIMAL; // Default format set to decimal
+		ProbabilityDisplay.decimalPlaces = 2; // Default decimal places set to 2
+		this.probability.setForeground(Color.BLACK); // Set the default color
 
-		this.add(probability, SwingConstants.CENTER);
+		this.add(probability, SwingConstants.CENTER); // Add the label to the panel centered
 	}
-
+	// Converts the format type to a readable string
 	public static String toString( int formatType ) {
 		switch(formatType) {
 		case DECIMAL : return "decimal";
@@ -45,14 +46,11 @@ public class ProbabilityDisplay extends JPanel {
 		default : return "ERROR";
 		}
 	}
-	// Implementation of reset method
+	// Resets the probability display to default settings
 	public void reset() {
 		this.probability.setText(DEFAULT);
 		setProbabilityEnabled(false);
 		this.setBorder( new TitledBorder(name) );
-//		this.setBorder( new TitledBorder(
-//				BorderFactory.createRaisedBevelBorder(),
-//				name) );
 		setVisible(true);
 	}
 	// Implementation of setting and updating probability
