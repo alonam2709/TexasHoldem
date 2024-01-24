@@ -1,6 +1,6 @@
 import java.util.Vector;
 
-class YourProbabilityFormulae extends ProbabilityFormulae {
+class YourProbabilityFormulae extends ProbabilityFormulae { //Inheritance
 
 	// Constructor which takes a Vector of cards as input
 	public YourProbabilityFormulae(Vector<Card> cards) {

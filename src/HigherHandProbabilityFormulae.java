@@ -2,7 +2,7 @@
 import java.util.Vector;
 
 //Class for calculating probabilities of achieving higher poker hands.
-class HigherHandProbabilityFormulae extends ProbabilityFormulae {
+class HigherHandProbabilityFormulae extends ProbabilityFormulae { //Inheritance
 
 	private Vector yourCards;
 	private Vector communityCards;

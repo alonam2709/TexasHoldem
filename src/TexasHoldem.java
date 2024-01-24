@@ -9,7 +9,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Vector;
+
 
 /*
  * Main class for a Texas Hold'em poker game application.
@@ -151,8 +151,7 @@ public class TexasHoldem extends Applet
 		resetButton.addActionListener(this);
 
 	}
-	// Method to output the hand logs to a text file
-	private void outputHandLogsToTextFile() {
+	private void outputHandLogsToTextFile() { // Method to output the hand logs to a text file
 		// Retrieve an iterable collection of LogEntry objects from the handLogList
 		Iterable<LogEntry> handLogs = handLogList.getLogEntries();
 		// Define the name of the file where logs will be saved
@@ -238,7 +237,7 @@ public class TexasHoldem extends Applet
 			display.setAllDisplaysEnabled(true);
 			display.setProbabilities(hand.getProbabilities());
 		} else {
-			// If no update is required, disable all displays
+			// If no update is requireed, disable all displays
 			display.setAllDisplaysEnabled(false);
 		}
 	}
